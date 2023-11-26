@@ -18,7 +18,7 @@ const Header = () => {
           </Nav>
         </Navbar.Collapse>
         <Col sm={1}>
-          <Link className='text-white text'>login</Link>
+          <Link to='/login' className='text-white text'>login</Link>
         </Col>
       {/* </Container> */}
     </Navbar>
