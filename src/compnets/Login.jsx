@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, Col } from 'react-bootstrap'
+import { Container, Col } from 'react-bootstrap'
+import Header from './Navbar'
+import Footer from './Footer'
+import { useNavigate } from 'react-router-dom'
 let instilize = {
   username: "",
   email: "",
@@ -9,6 +12,7 @@ const Login = () => {
   let [user, setUser] = useState(instilize)
   let [login, setLogin] = useState(false)
   let [userdata, setUserdata] = useState([])
+  let location=useNavigate
 
   const HandelInput = (e) => {
     let { name, value } = e.target
@@ -18,7 +22,9 @@ const Login = () => {
   const HandelSign = (e) => {
     e.preventDefault();
     setUserdata([user, ...userdata])
+    alert('login sucesful')
     setLogin(true)
+    location('/ ')
   }
 
   useEffect(() => {
@@ -32,55 +38,62 @@ const Login = () => {
       let pas = 0
       if (e.email == user.email) {
         ema = 1
-        console.log(ema)
         if (e.password == user.password) {
           pas = 1
-          console.log(pas)
         }
       }
-      console.log(ema)
       if (ema == 1) {
         if (pas == 1) {
-          <Alert key='success' variant='success'>
-            login successfull
-          </Alert>
-          console.log(pas)
+          alert("login suscefuuly")
+          location('/')
         }
         else {
-          <Alert key='warning' variant='warning'>
-            please cheack password
-          </Alert>
+          alert("plese check your possword")
         }
 
       }
       else {
-        <Alert key='warning' variant='warning'>
-          please cheach email
-        </Alert>
+        alert("check email or first sign up")
       }
     })
   }
+  const HandelAccount=(lo)=>{
+    setLogin(lo)
+  }
+  console.log(login);
 
   return (
-    <>{
-      login ?
-        <Col sm={12} md={6} className='mx-auto my-5 py-5 ' style={{height: '65vh'}}>
-          <form onSubmit={HandelLogin}>
-            <input type="email" className='col-12 border border-3 border-black border-top-0 border-start-0 border-end-0 mb-4 text-capitalize' onChange={HandelInput} onChange={HandelInput} name='email' placeholder='enter your email' />
-            <input type="password" className='col-12 border border-3 border-black border-top-0 border-start-0 border-end-0 mb-4 text-capitalize' onChange={HandelInput} onChange={HandelInput} name='password' placeholder='enter the password' />
-            <input type="submit" className='btn btn-outline-primary text-uppercase col-12' value="login" />
-          </form>
-        </Col>
-        :
-        <Col sm={12} md={3} className='mx-auto my-5 py-5 ' style={{height: '65vh'}} >
-        <form onSubmit={HandelSign}>
-          <input type="text" className='col-12 border border-3 border-black border-top-0 border-start-0 border-end-0 mb-4 text-capitalize' onChange={HandelInput} name='username' placeholder='enter your username' />
-          <input type="email" className='col-12 border border-3 border-black border-top-0 border-start-0 border-end-0 mb-4 text-capitalize' onChange={HandelInput} name='email' placeholder='enter your email' />
-          <input type="password" className='col-12 border border-3 border-black border-top-0 border-start-0 border-end-0 mb-4 text-capitalize' onChange={HandelInput} name='password' placeholder='enter the password' />
-          <input type="submit" value="sign-up" className='btn btn-outline-primary text-uppercase col-12' />
-        </form>
-        </Col>
-    }</>
+    <>
+      <Header />
+      <section>
+        <Container>
+        {
+          login ?
+            <Col sm={12} md={6} className='mx-auto my-5 py-5 ' style={{ height: '65vh' }}>
+              <form onSubmit={HandelLogin}>
+                <input type="email" className='col-12 border border-2 border-black border-top-0 border-start-0 border-end-0 mb-4 text-capitalize' onChange={HandelInput}
+                  name='email' placeholder='enter your email' />
+                <input type="password" className='col-12 border border-2 border-black border-top-0 border-start-0 border-end-0 mb-4 text-capitalize' onChange={HandelInput}
+                  name='password' placeholder='enter the password' />
+                <input type="submit" className='btn btn-outline-primary text-uppercase col-12' value="login" />
+                <button className='bg-white pt-4 text-uppercase border-0' onClick={()=>HandelAccount(false)}>don't have any account ?</button>
+              </form>
+            </Col>
+            :
+            <Col sm={12} md={6} className='mx-auto my-5 py-5 ' style={{ height: '65vh' }} >
+              <form onSubmit={HandelSign}>
+                <input type="text" className='col-12 border border-2 border-black border-top-0 border-start-0 border-end-0 mb-4 text-capitalize' onChange={HandelInput} name='username' placeholder='enter your username' />
+                <input type="email" className='col-12 border border-2 border-black border-top-0 border-start-0 border-end-0 mb-4 text-capitalize' onChange={HandelInput} name='email' placeholder='enter your email' />
+                <input type="password" className='col-12 border border-2 border-black border-top-0 border-start-0 border-end-0 mb-4 text-capitalize' onChange={HandelInput} name='password' placeholder='enter the password' />
+                <input type="submit" value="sign-up" className='btn btn-outline-primary text-uppercase col-12' />
+                <button className='bg-white pt-4 text-uppercase border-0' onClick={()=>HandelAccount(true)}>i have already account ?</button>
+              </form>
+            </Col>
+        }
+        </Container>
+        </section>
+      <Footer />
+    </>
   )
 }
 
